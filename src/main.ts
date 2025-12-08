@@ -20,7 +20,7 @@ const app = createApp(App);
 Object.keys(ElementPlusIcons).forEach((iconName) => {
   app.component(iconName, ElementPlusIcons[iconName as keyof typeof ElementPlusIcons]);
 });
-app.provide('httpUrl', 'http://localhost'); // 提供全局变量文件地址
+app.provide('httpUrl', 'http://1.92.103.50'); // 提供全局变量文件地址
 app
   .use(createPinia())
   .use(router)
