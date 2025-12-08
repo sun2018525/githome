@@ -1,0 +1,53 @@
+﻿@charset "utf-8";
+body,html{margin:0px;padding:0px; display: flex;flex-direction:column;height: 100%;font-family: "微软雅黑", "宋体", Arial; overflow: hidden;}
+a{color:#3184E5;text-decoration: none;font-size: 14px;}
+a:hover{color:#f00;text-decoration: none;}
+
+
+.toppanel{width:100%;height:80px;background:#ffffff;box-shadow: 0px 5px 8px #E1EBFE;z-index: 100;}
+.middlepanel{width:100%;height:568px;background:#EFF7FF;flex:1;}
+.bottompanel{width:100%;height:20px;background:#fff;line-height: 20px;text-align: center;color: #666;font-size: 14px;}
+.bottompane2{width:100%;height:20px;background:#fff;line-height: 20px;text-align: center;color: #666;font-size: 8px;}
+
+.toppanel h1{background:url("../img/logo-login.png") no-repeat left center;margin:0px auto;padding:0px 0px 0px 80px;font-size: 30px;color:#333;line-height: 80px;width: 960px;font-weight: bold;}
+.middlepanel dl{
+    width:1000px;
+    height:470px;
+    margin:10px auto;padding:0px;
+    background:url("../img/login-panel.png") no-repeat center center;
+    /* background-size: contain;   */
+    background-size: 100% 100%;       
+    /* width: 1000px;
+    height: 450px;
+    margin: 10px auto;
+    padding: 0;
+    background: url("../img/login-panel.png") no-repeat left center;
+
+    /* 背景图片显示尺寸(放大/缩小背景图)  
+    background-size: 300px 300px;    通过像素设置  
+    background-size: 80% 80%;      通过百分比设置  
+    background-size: cover;       覆盖:图片成比例填满盒子。可用于适配 
+    background-size: contain;     包含:图片成比例放大,可能不会填满盒子。可用于适配  */
+}
+.middlepanel dl dt{margin-left:90px;padding:100px 0px 0px 0px;float: left;width: 430px;text-align: center;}
+.middlepanel dl dd{margin:0px 60px;padding:80px 0px 0px 0px;float: right;}
+
+
+.loginContent{width:350px;}
+.loginContent h1{border-bottom: solid 1px #D2E8FF;font-size: 20px;width:100%;margin:0px 10px 40px -10px;padding:20px 0px;color:#3184E5;font-weight: normal;}
+.loginContent h1 span{ display:block;background:url("../img/title01.png") no-repeat right center;padding:0px 130px 0px 0px;width:80px;margin:0px auto;box-sizing: content-box;}
+.loginContent .loginItem{margin-bottom: 20px ;display: flex;}
+.loginItem{width: 300px; height:35px;margin-left: 20px; background:url("../img/inputbg.png") no-repeat left top;}
+.loginItem:hover{width: 300px; height:35px;background:url("../img/inputbg.png") no-repeat left -45px;}
+.loginContent input{border:none;font-size: 14px;text-indent: 2.5em;padding-left:10px;outline: none;margin:2px 0px;background:none;width:100%;flex: 1;}
+.loginContent input:hover{border:none;}
+.loginContent input[type='checkbox']{ display: inline-block;width: 13px;height: 13px;max-width: 19px;}
+.loginItem .user,.loginItem .user:visited,.loginItem .user:focus{ width: 300px;background: url("../img/user-icon.png") no-repeat 15px center ;}
+.loginItem .password,.loginItem .password:visited,.loginItem .password:focus{width: 300px;background: url("../img/password-icon.png") no-repeat 15px center ;}
+.loginItem .captcha,.loginItem .captcha:visited,.loginItem .captcha:focus{width: 300px;background: url("../img/yzm-icon.png") no-repeat 15px center ;position: relative;}
+.loginBt{margin-left: 20px !important;display:block !important;width:300px !important;height:45px !important;background:linear-gradient(116deg,rgba(21,185,255,1) 0%,rgba(19,112,218,1) 100%) !important;box-shadow:0px 6px 6px rgba(131,213,230,0.51) !important;
+opacity:1;border-radius:25px !important;transform: translateY(0px);transition: 0.3s;text-align: center !important;line-height: 25px !important;font-size: 16px !important;color:white !important;}
+.loginBt:hover{color: #FFFFFF !important;box-shadow: 0px 5px 8px #4BC0D2 !important;transform: translateY(-3px);text-decoration: none;}
+#mpanel2{display:inline-block;margin:7px 10px 0px 5px;}
+#mpanel2 img{display:inline-block;vertical-align: middle;}
+ 
