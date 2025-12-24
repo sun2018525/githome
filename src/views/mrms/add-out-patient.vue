@@ -20,9 +20,17 @@
         <el-input v-model="dataForm.medicineInfo" placeholder="药物信息"></el-input>
       </el-form-item>
       <el-form-item label="病历单" prop="examFile">
-        <el-upload :action="recordUrl" drag multiple :before-upload="beforeUploadHandle" :on-success="successHandle" class="text-center">
-          <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-          <div class="el-upload__text">将文件拖到此处，或点击上传</div>
+        <el-upload ref="uploadRef" v-model:file-list="fileList" :on-change="handleChange" :action="recordUrl" :before-upload="beforeUploadHandle" :on-success="successHandle" class="upload-demo">
+           <el-button type="primary">点击上传</el-button>
+          <template #tip>
+            <!-- <span v-if="dataForm.examFile">{{ dataForm.examFile}}</span> -->
+            <div class="el-upload__tip">
+              只能上传一个文件，且文件大小不能超过10M！
+            </div>
+          </template>
+          <!-- <span v-if="dataForm.examFile"><a :href="fileUrl+dataForm.examFile" style="color:blue;cursor:pointer">{{ dataForm.examFile}}</a></span>
+          <el-icon v-else class="el-icon--upload"><upload-filled  /></el-icon>
+          <div class="el-upload__text">将文件拖到此处，或点击上传</div> -->
         </el-upload>
        </el-form-item>
       </el-form>
@@ -34,9 +42,9 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref ,inject} from "vue";
 import baseService from "@/service/baseService";
-import { ElMessage,UploadProps } from "element-plus";
+import { ElMessage,UploadProps,UploadUserFile } from "element-plus";
 import { IObject } from "@/types/interface";
 import app from "@/constants/app";
 import { getToken } from "@/utils/cache";
@@ -45,6 +53,8 @@ const emit = defineEmits(["refreshDataList"]);
 const visible = ref(false);
 const dataFormRef = ref();
 const recordUrl = ref("");
+const fileList = ref<UploadUserFile[]>([])
+
 const dataForm = reactive({
   id: null,   
   reservationId:null,
@@ -78,9 +88,9 @@ const rules = ref({
           medicineInfo: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
-          examFile: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ] 
+    //       examFile: [
+    //   { required: true, message: '必填项不能为空', trigger: 'blur' }
+    // ] 
   });
 const successHandle: UploadProps['onSuccess'] = (
   response,
@@ -94,15 +104,22 @@ const successHandle: UploadProps['onSuccess'] = (
 }
 
 const beforeUploadHandle: UploadProps['beforeUpload'] = (file) => {
-  if (file.size / 1024 / 1024 > 2) {
-    ElMessage.error('文件大小不能超过2M!')
+  if (file.size / 1024 / 1024 > 10) {
+    ElMessage.error('文件大小不能超过10M!')
     return false
   }
   return true
 }
+const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
+   if (uploadFiles.length > 1) {
+    uploadFiles.splice(0, 1); // 自动替换前一个文件
+  }
+  // if(fileList.value.length>1){
+      fileList.value=[{name: uploadFile.name, url: URL.createObjectURL(uploadFile.raw!)}];
+  // }
+};
 const init = (row:IObject) => {
   visible.value = true;
-  dataForm.id = null;
   recordUrl.value = `${app.api}/mrms/file/upload?token=${getToken()}&fileType=record`;
     // 重置表单数据
   if (dataFormRef.value) {
@@ -110,6 +127,7 @@ const init = (row:IObject) => {
   }
   Object.assign(dataForm, row);
   dataForm.reservationId=row.id;
+  dataForm.id=null;
 };
 
 
@@ -129,7 +147,7 @@ const dataFormSubmitHandle = () => {
     (!dataForm.id ? baseService.post : baseService.put)("/mrms/outpatientMedicalRecord", dataForm).then((res) => {
       ElMessage.success({
         message: '保存成功，请至【门诊病历】界面查看',
-        duration: 500,
+        duration: 1500,
         onClose: () => {
           visible.value = false;
           emit("refreshDataList");

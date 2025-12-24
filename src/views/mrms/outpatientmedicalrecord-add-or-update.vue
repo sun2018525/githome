@@ -42,10 +42,13 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from "vue";
+import { reactive, ref ,inject} from "vue";
 import baseService from "@/service/baseService";
 import { ElMessage ,UploadProps,UploadInstance,UploadUserFile} from "element-plus";
+import app from "@/constants/app";
+import { getToken } from "@/utils/cache";
 const emit = defineEmits(["refreshDataList"]);
+const fileUrl = inject('httpUrl')+"/recordUrl/"; // 注入全局变量
 
 const visible = ref(false);
 const dataFormRef = ref();
@@ -85,14 +88,15 @@ const rules = ref({
           medicineInfo: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
-          examFile: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ] 
+    //       examFile: [
+    //   { required: true, message: '必填项不能为空', trigger: 'blur' }
+    // ] 
   });
 
 const init = (id?: number) => {
   visible.value = true;
   dataForm.id = null;
+  recordUrl.value = `${app.api}/mrms/file/upload?token=${getToken()}&fileType=record`;
 
   // 重置表单数据
   if (dataFormRef.value) {
@@ -132,6 +136,10 @@ const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
 const getInfo = (id: number) => {
   baseService.get("/mrms/outpatientMedicalRecord/" + id).then((res) => {
     Object.assign(dataForm, res.data);
+    fileList.value = [{
+        name: dataForm.examFile,
+        url: fileUrl + dataForm.examFile
+      }]; 
   });
 };
 

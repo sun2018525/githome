@@ -67,7 +67,7 @@
     <el-pagination :current-page="state.page" :page-sizes="[10, 20, 50, 100]" :page-size="state.limit" :total="state.total" layout="total, sizes, prev, pager, next, jumper" @size-change="state.pageSizeChangeHandle" @current-change="state.pageCurrentChangeHandle"> </el-pagination>
     <!-- 弹窗, 新增 / 修改 -->
     <add-or-update ref="addOrUpdateRef" @refreshDataList="state.getDataList">确定</add-or-update>
-    <add-record-detail ref="addRecordDetailRef"></add-record-detail>
+    <add-record-detail ref="addRecordDetailRef" :inpatientId="selectedId"></add-record-detail>
     <update-out-patient ref="updateOutPatientRef" @refreshDataList="state.getDataList">确定</update-out-patient>
   </div>
 </template>
@@ -81,7 +81,7 @@ import AddRecordDetail from "./inpatientrecorddetail.vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import baseService from "@/service/baseService";
 import { IObject } from "@/types/interface";
-
+const selectedId = ref(null);
 const view = reactive({
   getDataListURL: "/mrms/inpatientRecord/page",
   getDataListIsPage: true,
@@ -103,6 +103,7 @@ const addOrUpdateHandle = (id?: number) => {
 };
 const addRecordDetailRef = ref();
 const addRecordDetailHandle = (row?: IObject) => {
+  selectedId.value=row?.id;
   addRecordDetailRef.value.init(row);
 };
 const updateOutPatientRef= ref();

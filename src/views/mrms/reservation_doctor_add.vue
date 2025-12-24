@@ -1,7 +1,7 @@
 <template>
   <el-dialog v-model="visible" title="预约" :close-on-click-modal="false" :close-on-press-escape="false">
-    <el-form :model="dataForm" ref="dataFormRef" @keyup.enter="dataFormSubmitHandle()" label-width="120px">
-      <el-form-item prop="reservationTime" label="预约时间" :rules="rules">
+    <el-form :model="dataForm" ref="dataFormRef" :rules="rules" @keyup.enter="dataFormSubmitHandle()" label-width="120px">
+      <el-form-item prop="reservationTime" label="预约时间" >
          <el-date-picker
          v-model="dataForm.reservationTime"
         type="date"
@@ -45,9 +45,10 @@ const init = (doctor:IObject) => {
   dataForm.doctorId=doctor.id;
   dataForm.doctorName=doctor.realName;
   dataForm.officeName=doctor.officeName;
+  dataForm.reservationTime=null;
 };
 const disabledDate = (time: Date) => {
-  const fifteenDays = 14 * 24 * 3600 * 1000; // 15天的时间戳
+  const fifteenDays = 14 * 24 * 3600 * 1000; // 14天的时间戳
   return time.getTime() > (Date.now() + fifteenDays)|| (time.getTime() < Date.now())
   
 } 
@@ -62,7 +63,7 @@ const dataFormSubmitHandle = () => {
     }).then((res) => {
       ElMessage.success({
         message: "预约成功，请至【我的预约】界面查看预约信息！",
-        duration: 500,
+        duration: 1500,
         onClose: () => {
           visible.value = false;
           emit("refreshDataList");

@@ -88,9 +88,9 @@ const rules = ref({
           drugInfo: [
       { required: true, message: '必填项不能为空', trigger: 'blur' }
     ],
-          examFile: [
-      { required: true, message: '必填项不能为空', trigger: 'blur' }
-    ]
+    //       examFile: [
+    //   { required: true, message: '必填项不能为空', trigger: 'blur' }
+    // ]
   });
 
 const successHandle: UploadProps['onSuccess'] = (
@@ -125,7 +125,6 @@ const handleChange: UploadProps['onChange'] = (uploadFile, uploadFiles) => {
 const init = (id:number,row: IObject) => {
   recordUrl.value = `${app.api}/mrms/file/upload?token=${getToken()}&fileType=record`;
   visible.value = true;
-  dataForm.id = "";
 
   // 重置表单数据
   nextTick(() => {
@@ -138,7 +137,6 @@ const init = (id:number,row: IObject) => {
   Object.assign(dataForm, row);  
   dataForm.inpatientId=row.id;
   dataForm.id = "";
-
   if (id) {
     getInfo(id);
   }

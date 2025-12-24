@@ -80,13 +80,13 @@ const rules = ref({
 
 const init = (row:IObject) => {
   visible.value = true;
-  dataForm.id = null;
    // 重置表单数据
   if (dataFormRef.value) {
     dataFormRef.value.resetFields();
   }
-  dataForm.reservationId=row.id;
   Object.assign(dataForm, row);
+  dataForm.reservationId=row.id;
+  dataForm.id = null;
 };
 
 // 获取信息
@@ -105,7 +105,7 @@ const dataFormSubmitHandle = () => {
     baseService.post("/mrms/inpatientRecord", dataForm).then((res) => {
       ElMessage.success({
         message: '保存成功，请至【住院管理】界面查看',
-        duration: 500,
+        duration: 1500,
         onClose: () => {
           visible.value = false;
           emit("refreshDataList");

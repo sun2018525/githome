@@ -51,7 +51,6 @@ const rules = ref({
 
 const init = (row?: IObject) => {
   visible.value = true; 
-  dataForm.id = null;
   Object.assign(dataForm, row);
   dataForm.inHospitalStatus=1;
 };
