@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
     "target": "esnext",
     "module": "esnext",
     "strict": true,
@@ -15,13 +16,13 @@
     "sourceMap": true,
     "resolveJsonModule": true,
     "baseUrl": ".",
-    "types": ["vite/client"],
+    "types": ["vite-plugin-svg-icons/client"],
     "paths": {
       "@/*": ["src/*"]
     },
-    "compilerOptions": {
-      "types": ["vite-plugin-svg-icons/client"]
-    },
+    // "compilerOptions": {
+    //   "types": ["vite-plugin-svg-icons/client"]
+    // },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
   "include": ["src/**/*.ts", "src/**/*.vue", "tests/**/*.ts"],
